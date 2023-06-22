@@ -1,24 +1,36 @@
-import logo from './logo.svg';
+import {Header} from "./components/Header/Header.js"
+import React from "react";
+import { UpperDiv } from "./components/UpperDiv/UpperDiv.js";
+import { LowerDiv } from "./components/LowerDiv/LowerDiv.js";
 import './App.css';
+import { AppStyled, BodyStyled } from "./style.js";
+import { useState } from "react";
 
 function App() {
+  const [employeeList, setEmployeeList]= useState([])
+ 
+  function appendList (employee){
+setEmployeeList([...employeeList,employee])
+  }
+  function removeEmployee (index){
+    setEmployeeList((employeeList) => {
+      const newemployeeList = [...employeeList];
+      newemployeeList.splice(index, 1);
+      setEmployeeList(newemployeeList)
+    });
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    
+    <AppStyled >
+      <Header/>
+    <BodyStyled>
+      <UpperDiv appendList={appendList}/>
+      <LowerDiv employeeList={employeeList} 
+      removeEmployee={removeEmployee}
+      />
+    </BodyStyled>
+    </AppStyled>
+    
   );
 }
 
